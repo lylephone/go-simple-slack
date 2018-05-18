@@ -4,12 +4,16 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/pkg/errors"
 )
 
-func (s *Client) Post(ctx context.Context, p *AttachmentPayload) (*http.Response, error) {
+func (s *Client) Post(ctx context.Context, p *Payload) (*http.Response, error) {
+	j, _ := json.MarshalIndent(p, "", "\t")
+	log.Printf("%+v", string(j))
+
 	jsonBytes, err := json.Marshal(p)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create slack message")
